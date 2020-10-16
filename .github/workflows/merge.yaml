@@ -2,9 +2,9 @@ name: merge
 on:
   push:
     branches:
-      - 'master'
+      - 'main'
 jobs:
-  merge_master:
+  merge_main:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
