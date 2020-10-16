@@ -32,7 +32,7 @@ Then, run:
 kubectl create -f deploy/scaleway-operator-secrets.yml --edit --namespace=scaleway-operator-system
 ```
 
-and replace the values with your base64 encoded values.
+and replace the values.
 
 Finally, in order to deploy the Scaleway Operator, run:
 ```bash
