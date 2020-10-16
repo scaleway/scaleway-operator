@@ -1,0 +1,139 @@
+
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.3.0
+  creationTimestamp: null
+  name: rdbdatabases.rdb.scaleway.com
+spec:
+  group: rdb.scaleway.com
+  names:
+    kind: RDBDatabase
+    listKind: RDBDatabaseList
+    plural: rdbdatabases
+    shortNames:
+    - rdbd
+    - rdbdatabase
+    singular: rdbdatabase
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.size
+      name: size
+      type: string
+    - jsonPath: .status.owner
+      name: owner
+      type: string
+    - jsonPath: .status.managed
+      name: managed
+      type: string
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: RDBDatabase is the Schema for the rdbdatabases API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: RDBDatabaseSpec defines the desired state of RDBDatabase
+            properties:
+              instanceRef:
+                description: InstanceRef represents the reference to the instance
+                  of the database
+                properties:
+                  externalID:
+                    description: ExternalID is the ID of the instance This field is
+                      immutable after creation
+                    type: string
+                  name:
+                    description: Name is the name of the instance of this database
+                      This field is immutable after creation
+                    type: string
+                  namespace:
+                    description: Namespace is the namespace of the instance of this
+                      database If empty, it will use the namespace of the database
+                      This field is immutable after creation
+                    type: string
+                  region:
+                    description: Region is the region of the instance This field is
+                      immutable after creation
+                    type: string
+                type: object
+              overrideName:
+                description: OverrideName represents the name given to the database
+                  This field is immutable after creation
+                type: string
+            required:
+            - instanceRef
+            type: object
+          status:
+            description: RDBDatabaseStatus defines the observed state of RDBDatabase
+            properties:
+              conditions:
+                items:
+                  description: Condition contains details for the current condition
+                    of this Scaleway resource.
+                  properties:
+                    lastProbeTime:
+                      description: Last time we probed the condition.
+                      format: date-time
+                      type: string
+                    lastTransitionTime:
+                      description: Last time the condition transitioned from one status
+                        to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Human-readable message indicating details about
+                        last transition.
+                      type: string
+                    reason:
+                      description: Unique, one-word, CamelCase reason for the condition's
+                        last transition.
+                      type: string
+                    status:
+                      description: Status is the status of the condition. Can be True,
+                        False, Unknown.
+                      type: string
+                    type:
+                      description: Type is the type of the condition.
+                      type: string
+                  type: object
+                type: array
+              managed:
+                description: Managed defines whether this database is mananged
+                type: boolean
+              owner:
+                description: Owner represents the owner of this database
+                type: string
+              size:
+                anyOf:
+                - type: integer
+                - type: string
+                description: Size represents the size of the database
+                pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                x-kubernetes-int-or-string: true
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

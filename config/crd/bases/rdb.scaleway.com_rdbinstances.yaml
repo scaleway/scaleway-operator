@@ -1,0 +1,198 @@
+
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.3.0
+  creationTimestamp: null
+  name: rdbinstances.rdb.scaleway.com
+spec:
+  group: rdb.scaleway.com
+  names:
+    kind: RDBInstance
+    listKind: RDBInstanceList
+    plural: rdbinstances
+    shortNames:
+    - rdbi
+    - rdbinstance
+    singular: rdbinstance
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.endpoint.ip
+      name: IP
+      type: string
+    - jsonPath: .status.endpoint.port
+      name: Port
+      type: integer
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: RDBInstance is the Schema for the databaseinstances API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: RDBInstanceSpec defines the desired state of RDBInstance
+            properties:
+              acl:
+                description: ACL represents the ACL rules of the RDBInstance
+                properties:
+                  allowCluster:
+                    description: AllowCluster represents wether the nodes in the cluster
+                      should be allowed
+                    type: boolean
+                  rules:
+                    description: Rules represents the RDB ACL rules
+                    items:
+                      description: RDBACLRule defines a rule for a RDB ACL
+                      properties:
+                        description:
+                          description: Description is the description associated with
+                            this ACL rule
+                          type: string
+                        ipRange:
+                          description: IPRange represents a CIDR IP range
+                          type: string
+                      required:
+                      - ipRange
+                      type: object
+                    type: array
+                type: object
+              autoBackup:
+                description: AutoBackup represents the RDBInstance auto backup policy
+                properties:
+                  disabled:
+                    description: Disabled represents whether the auto backup should
+                      be disabled
+                    type: boolean
+                  frequency:
+                    description: Frequency represents the frequency, in hour, at which
+                      auto backups are made Default to 24
+                    format: int32
+                    minimum: 0
+                    type: integer
+                  retention:
+                    description: Retention represents the number of days the autobackup
+                      are kept Default to 7
+                    format: int32
+                    minimum: 0
+                    type: integer
+                type: object
+              engine:
+                description: Engine is the database engine of the RDBInstance
+                type: string
+              instanceFrom:
+                description: InstanceFrom allows to create an instance from an existing
+                  one At most one of InstanceID/Region and InstanceFrom have to be
+                  specified on creation. This field is immutable after creation
+                properties:
+                  externalID:
+                    description: ExternalID is the ID of the instance This field is
+                      immutable after creation
+                    type: string
+                  name:
+                    description: Name is the name of the instance of this database
+                      This field is immutable after creation
+                    type: string
+                  namespace:
+                    description: Namespace is the namespace of the instance of this
+                      database If empty, it will use the namespace of the database
+                      This field is immutable after creation
+                    type: string
+                  region:
+                    description: Region is the region of the instance This field is
+                      immutable after creation
+                    type: string
+                type: object
+              instanceID:
+                description: InstanceID is the ID of the instance If empty it will
+                  create a new instance If set it will use this ID as the instance
+                  ID This field is immutable after creation At most one of InstanceID/Region
+                  and InstanceFrom have to be specified on creation.
+                type: string
+              isHaCluster:
+                description: IsHaCluster represents whether the RDBInstance should
+                  be in HA mode Defaults to false
+                type: boolean
+              nodeType:
+                description: NodeType is the type of node to use for the RDBInstance
+                type: string
+              region:
+                description: Region is the region in which the RDBInstance will run
+                  This field is immutable after creation Defaults to the controller
+                  default region At most one of InstanceID/Region and InstanceFrom
+                  have to be specified on creation.
+                type: string
+            required:
+            - engine
+            - nodeType
+            type: object
+          status:
+            description: RDBInstanceStatus defines the observed state of RDBInstance
+            properties:
+              conditions:
+                items:
+                  description: Condition contains details for the current condition
+                    of this Scaleway resource.
+                  properties:
+                    lastProbeTime:
+                      description: Last time we probed the condition.
+                      format: date-time
+                      type: string
+                    lastTransitionTime:
+                      description: Last time the condition transitioned from one status
+                        to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Human-readable message indicating details about
+                        last transition.
+                      type: string
+                    reason:
+                      description: Unique, one-word, CamelCase reason for the condition's
+                        last transition.
+                      type: string
+                    status:
+                      description: Status is the status of the condition. Can be True,
+                        False, Unknown.
+                      type: string
+                    type:
+                      description: Type is the type of the condition.
+                      type: string
+                  type: object
+                type: array
+              endpoint:
+                description: Endpoint is the endpoint of the RDBInstance
+                properties:
+                  ip:
+                    description: IP is the IP of the RDBInstance
+                    type: string
+                  port:
+                    description: Port if the port of the RDBInstance
+                    format: int32
+                    type: integer
+                type: object
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

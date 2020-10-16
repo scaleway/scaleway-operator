@@ -1,0 +1,83 @@
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  name: manager-role
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
+  - patch
+- apiGroups:
+  - ""
+  resources:
+  - nodes
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - rdb.scaleway.com
+  resources:
+  - rdbdatabases
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - rdb.scaleway.com
+  resources:
+  - rdbdatabases/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - rdb.scaleway.com
+  resources:
+  - rdbinstances
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - rdb.scaleway.com
+  resources:
+  - rdbinstances/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - rdb.scaleway.com
+  resources:
+  - rdbusers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - rdb.scaleway.com
+  resources:
+  - rdbusers/status
+  verbs:
+  - get
+  - patch
+  - update

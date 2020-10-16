@@ -1,0 +1,7 @@
+apiVersion: rdb.scaleway.com/v1alpha1
+kind: RDBDatabase
+metadata:
+  name: rdbdatabase-sample
+spec:
+  instanceRef:
+    name: myawsomedb

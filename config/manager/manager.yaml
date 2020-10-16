@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    control-plane: controller-manager
+  name: system
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: controller-manager
+  namespace: system
+  labels:
+    control-plane: controller-manager
+spec:
+  selector:
+    matchLabels:
+      control-plane: controller-manager
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        control-plane: controller-manager
+    spec:
+      containers:
+      - command:
+        - /scaleway-operator
+        args:
+        - --enable-leader-election
+        image: controller
+        name: manager
+        env:
+        - name: SCW_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: scaleway-operator-secrets
+              key: SCW_ACCESS_KEY
+        - name: SCW_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: scaleway-operator-secrets
+              key: SCW_SECRET_KEY
+        - name: SCW_DEFAULT_REGION
+          valueFrom:
+            secretKeyRef:
+              name: scaleway-operator-secrets
+              key: SCW_DEFAULT_REGION
+        - name: SCW_DEFAULT_PROJECT_ID
+          valueFrom:
+            secretKeyRef:
+              name: scaleway-operator-secrets
+              key: SCW_DEFAULT_PROJECT_ID
+        resources:
+          limits:
+            cpu: 100m
+            memory: 30Mi
+          requests:
+            cpu: 100m
+            memory: 20Mi
+      terminationGracePeriodSeconds: 10

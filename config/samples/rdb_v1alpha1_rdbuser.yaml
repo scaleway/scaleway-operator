@@ -1,0 +1,7 @@
+apiVersion: rdb.scaleway.com/v1alpha1
+kind: RDBUser
+metadata:
+  name: rdbuser-sample
+spec:
+  # Add fields here
+  foo: bar

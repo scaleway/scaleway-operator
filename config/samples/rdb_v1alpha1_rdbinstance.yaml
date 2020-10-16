@@ -1,0 +1,8 @@
+apiVersion: rdb.scaleway.com/v1alpha1
+kind: RDBInstance
+metadata:
+  name: myawsomedbbismysqld
+spec:
+  engine: MySQL-8
+  region: nl-ams
+  nodeType: db-dev-m

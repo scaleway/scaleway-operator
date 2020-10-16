@@ -1,0 +1,44 @@
+
+---
+apiVersion: admissionregistration.k8s.io/v1beta1
+kind: ValidatingWebhookConfiguration
+metadata:
+  creationTimestamp: null
+  name: validating-webhook-configuration
+webhooks:
+- clientConfig:
+    caBundle: Cg==
+    service:
+      name: webhook-service
+      namespace: system
+      path: /validate-rdb-scaleway-com-v1alpha1-rdbdatabase
+  failurePolicy: Fail
+  name: vrdbdatabase.kb.io
+  rules:
+  - apiGroups:
+    - rdb.scaleway.com
+    apiVersions:
+    - v1alpha1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - rdbdatabases
+- clientConfig:
+    caBundle: Cg==
+    service:
+      name: webhook-service
+      namespace: system
+      path: /validate-rdb-scaleway-com-v1alpha1-rdbinstance
+  failurePolicy: Fail
+  name: vrdbinstance.kb.io
+  rules:
+  - apiGroups:
+    - rdb.scaleway.com
+    apiVersions:
+    - v1alpha1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - rdbinstances

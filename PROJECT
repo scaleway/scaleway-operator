@@ -1,0 +1,14 @@
+domain: scaleway.com
+multigroup: true
+repo: github.com/scaleway/scaleway-operator
+resources:
+- group: rdb
+  kind: RDBInstance
+  version: v1alpha1
+- group: rdb
+  kind: RDBDatabase
+  version: v1alpha1
+- group: rdb
+  kind: RDBUser
+  version: v1alpha1
+version: "2"

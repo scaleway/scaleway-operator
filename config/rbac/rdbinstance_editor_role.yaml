@@ -1,0 +1,24 @@
+# permissions for end users to edit rdbinstances.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: rdbinstance-editor-role
+rules:
+- apiGroups:
+  - rdb.scaleway.com
+  resources:
+  - rdbinstances
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - rdb.scaleway.com
+  resources:
+  - rdbinstances/status
+  verbs:
+  - get

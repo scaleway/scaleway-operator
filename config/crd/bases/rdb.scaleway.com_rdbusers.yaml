@@ -1,0 +1,172 @@
+
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.3.0
+  creationTimestamp: null
+  name: rdbusers.rdb.scaleway.com
+spec:
+  group: rdb.scaleway.com
+  names:
+    kind: RDBUser
+    listKind: RDBUserList
+    plural: rdbusers
+    shortNames:
+    - rdbu
+    - rdbuser
+    singular: rdbuser
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .spec.userName
+      name: UserName
+      type: string
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: RDBUser is the Schema for the rdbusers API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: RDBUserSpec defines the desired state of RDBUser
+            properties:
+              admin:
+                description: Admin represents whether the user is an admin user
+                type: boolean
+              instanceRef:
+                description: InstanceRef represents the reference to the instance
+                  of the user
+                properties:
+                  externalID:
+                    description: ExternalID is the ID of the instance This field is
+                      immutable after creation
+                    type: string
+                  name:
+                    description: Name is the name of the instance of this database
+                      This field is immutable after creation
+                    type: string
+                  namespace:
+                    description: Namespace is the namespace of the instance of this
+                      database If empty, it will use the namespace of the database
+                      This field is immutable after creation
+                    type: string
+                  region:
+                    description: Region is the region of the instance This field is
+                      immutable after creation
+                    type: string
+                type: object
+              password:
+                description: Password is the password associated to the user
+                properties:
+                  value:
+                    description: Value represents a raw value
+                    type: string
+                  valueFrom:
+                    description: ValueFrom represents a value from a secret
+                    properties:
+                      secretKeyRef:
+                        description: SecretReference represents a Secret Reference.
+                          It has enough information to retrieve secret in any namespace
+                        properties:
+                          name:
+                            description: Name is unique within a namespace to reference
+                              a secret resource.
+                            type: string
+                          namespace:
+                            description: Namespace defines the space within which
+                              the secret name must be unique.
+                            type: string
+                        type: object
+                    required:
+                    - secretKeyRef
+                    type: object
+                type: object
+              privileges:
+                description: Privileges represents the privileges given to this user
+                items:
+                  description: RDBPrivilege defines a privilege linked to a RDBUser
+                  properties:
+                    databaseRef:
+                      description: DatabaseName is the name to a RDB Database for
+                        this privilege
+                      type: string
+                    permission:
+                      description: Permission is the given permission for this privilege
+                      enum:
+                      - ReadOnly
+                      - ReadWrite
+                      - All
+                      - None
+                      type: string
+                  required:
+                  - databaseRef
+                  - permission
+                  type: object
+                type: array
+              userName:
+                description: UserName is the user name to be created on the RDBInstance
+                type: string
+            required:
+            - instanceRef
+            - password
+            - userName
+            type: object
+          status:
+            description: RDBUserStatus defines the observed state of RDBUser
+            properties:
+              conditions:
+                items:
+                  description: Condition contains details for the current condition
+                    of this Scaleway resource.
+                  properties:
+                    lastProbeTime:
+                      description: Last time we probed the condition.
+                      format: date-time
+                      type: string
+                    lastTransitionTime:
+                      description: Last time the condition transitioned from one status
+                        to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Human-readable message indicating details about
+                        last transition.
+                      type: string
+                    reason:
+                      description: Unique, one-word, CamelCase reason for the condition's
+                        last transition.
+                      type: string
+                    status:
+                      description: Status is the status of the condition. Can be True,
+                        False, Unknown.
+                      type: string
+                    type:
+                      description: Type is the type of the condition.
+                      type: string
+                  type: object
+                type: array
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
