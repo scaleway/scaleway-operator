@@ -35,4 +35,4 @@ jobs:
         run: make release
         env:
           DOCKER_CLI_EXPERIMENTAL: enabled
-          IMAGE_TAG: ${{ env.GITHUB_SHA }}
+          IMAGE_TAG: ${{ github.sha }}
