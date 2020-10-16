@@ -36,6 +36,7 @@ and replace the values with your base64 encoded values.
 
 Finally, in order to deploy the Scaleway Operator, run:
 ```bash
+kubect apply -k config/default
 make deploy
 ```
 
