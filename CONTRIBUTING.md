@@ -31,7 +31,7 @@ If there is a match, thumbs up the issue with a 👍 and leave a comment if you 
 
 When reporting an issue, include the following:
 
-- The version of `scaleway-operator` you are using (v0.1.3, v0.2.4, master, ...)
+- The version of `scaleway-operator` you are using (v0.1.3, v0.2.4, main, ...)
 - Kubernetes apiserver version, flags and environments used.
 - Kubelet version, flags and environments used.
 - Go version
@@ -51,10 +51,10 @@ When requesting a feature, some of the questions we want to answer are:
 To submit code:
 
 - Create a fork of the project
-- Create a topic branch from where you want to base your work (usually master)
+- Create a topic branch from where you want to base your work (usually main)
 - Add tests to cover contributed code
 - Push your commit(s) to your topic branch on your fork
-- Open a pull request against `scaleway-operator` master branch that follows [PR guidelines](#pull-request-guidelines)
+- Open a pull request against `scaleway-operator` main branch that follows [PR guidelines](#pull-request-guidelines)
 
 The maintainers of `scaleway-operator` use a "Let's Get This Merged" (LGTM) message in the pull request to note that the commits are ready to merge.
 After one or more maintainer states LGTM, we will merge.
@@ -72,8 +72,8 @@ The goal of the following guidelines is to have Pull Requests (PRs) that are fai
 - **Please, keep us updated.**
   We will try our best to merge your PR, but please notice that PRs may be closed after 30 days of inactivity.
 
-Your pull request should be rebased against the current master branch. Please do not merge
-the current master branch in with your topic branch, nor use the Update Branch button provided
+Your pull request should be rebased against the current main branch. Please do not merge
+the current main branch in with your topic branch, nor use the Update Branch button provided
 by GitHub on the pull request page.
 
 Keep in mind only the **Pull Request Title** will be used as commit message as we stash all commits on merge.
