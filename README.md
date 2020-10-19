@@ -36,7 +36,7 @@ and replace the values.
 
 Finally, in order to deploy the Scaleway Operator, run:
 ```bash
-kubect apply -k config/default
+kubectl apply -k config/default
 ```
 
 ## Development
