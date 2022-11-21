@@ -4,6 +4,8 @@
 
 # Scaleway Operator for Kubernetes
 
+⚠️  this project is not maintained anymore.
+
 The **Scaleway Operator** is a Kubernetes controller that lets you create Scaleway Resources directly from Kubernetes via [Kubernetes Custom Resources Definitions](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/).
 
 **WARNING**: this project is under active development and should be considered alpha.
